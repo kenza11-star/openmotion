@@ -1,1 +1,0 @@
-const fs=require('fs'); fs.mkdirSync('dist',{recursive:true}); fs.cpSync('public','dist',{recursive:true}); console.log('KYN-X Motion Editor V3 build complete');
