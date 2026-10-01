@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>KYN-X Motion Editor</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="app">
+<header>
+  <button class="brand" id="newProject">K</button>
+  <div class="title"><b>KYN-X Motion</b><span id="projectName">Untitled Project</span></div>
+  <div class="headActions">
+    <button id="undo">↶</button><button id="redo">↷</button>
+    <button class="exportBtn" id="openExport">Export</button>
+  </div>
+</header>
+
+<main>
+<section class="workspace">
+  <div class="stageWrap">
+    <canvas id="stage" width="1280" height="720"></canvas>
+    <div class="emptyStage" id="emptyStage">
+      <div class="plus">＋</div>
+      <b>Start editing</b>
+      <span>Import a video, photo, or audio file</span>
+      <button id="startImport">Import Media</button>
+    </div>
+  </div>
+
+  <div class="transport">
+    <button id="prevFrame">◀|</button>
+    <button id="play">▶</button>
+    <button id="nextFrame">|▶</button>
+    <span id="timeLabel">00:00.000 / 00:00.000</span>
+    <span class="fpsBadge" id="fpsBadge">30 FPS</span>
+  </div>
+  <input id="scrub" class="scrub" type="range" min="0" max="1" step=".001" value="0">
+
+  <div class="mobileTools">
+    <button id="addMedia">＋ Media</button>
+    <button id="addText">T Text</button>
+    <button id="splitClip">Split</button>
+    <button id="duplicateClip">Duplicate</button>
+  </div>
+</section>
+
+<section class="editor">
+  <aside class="mediaPanel">
+    <div class="panelTitle">Media</div>
+    <button class="importBtn" id="importBtn">＋ Import</button>
+    <div id="mediaList" class="mediaList"></div>
+  </aside>
+
+  <section class="timelinePanel">
+    <div class="timelineHead">
+      <b>Timeline</b>
+      <span id="selectionInfo">No clip selected</span>
+    </div>
+    <div id="timeline" class="timeline">
+      <div class="ruler" id="ruler"></div>
+      <div class="track" id="track"></div>
+      <div class="playhead" id="playhead"></div>
+    </div>
+    <div class="timelineBottom">
+      <button id="zoomOut">−</button><input id="zoom" type="range" min="20" max="160" value="70"><button id="zoomIn">＋</button>
+    </div>
+  </section>
+
+  <aside class="inspector">
+    <div class="panelTitle">Inspector</div>
+    <div id="inspectorEmpty" class="emptyInspector">
+      <b>Select a clip</b><span>Tap a clip in the timeline to edit it.</span>
+    </div>
+    <div id="inspectorBody" hidden>
+      <div class="clipName" id="clipName"></div>
+      <label>Start <input id="trimStart" type="number" step=".01" min="0"></label>
+      <label>Duration <input id="trimDuration" type="number" step=".01" min=".01"></label>
+      <label>Speed <input id="speed" type="number" step=".05" min=".1" max="8"></label>
+      <hr>
+      <div class="sectionLabel">Transform</div>
+      <label>X <input id="posX" type="number" step="1"></label>
+      <label>Y <input id="posY" type="number" step="1"></label>
+      <label>Scale <input id="scale" type="number" step=".01" min=".01" max="10"></label>
+      <label>Rotation <input id="rotation" type="number" step="1"></label>
+      <label>Opacity <input id="opacity" type="number" step=".01" min="0" max="1"></label>
+      <button class="keyBtn" id="addKeyframe">◇ Add Keyframe</button>
+      <div id="keyframes" class="keyframes"></div>
+      <button class="danger" id="deleteClip">Delete Clip</button>
+    </div>
+  </aside>
+</section>
+</main>
+
+<input id="fileInput" type="file" accept="video/*,image/*,audio/*" multiple hidden>
+
+<div class="modal" id="exportModal" hidden>
+ <div class="modalCard">
+  <button class="close" id="closeExport">×</button>
+  <h2>Export</h2>
+  <p class="muted">Export the current canvas preview. Choose settings, then start.</p>
+  <div class="grid2">
+   <label>Resolution<select id="resolution"><option value="720">720p</option><option value="1080" selected>1080p</option></select></label>
+   <label>FPS<select id="exportFps"><option>30</option><option>60</option><option>90</option><option>120</option></select></label>
+  </div>
+  <label>Bitrate<select id="bitrate"><option>Medium</option><option selected>High</option><option>Very High</option></select></label>
+  <button class="startExport" id="startExport">Start Export</button>
+  <div id="exportStatus" class="exportStatus"></div>
+ </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="/app.js"></script>
+</body>
+</html>
